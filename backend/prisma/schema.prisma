@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+
+model Admin {
+    id      Int @id @default(autoincrement())
+    name    String
+    userName    String @unique
+    password    String
+    role    Role @default(USER)
+    blogs Blog[]
+}
+
+model Blog {
+    id      Int @id @default(autoincrement())
+    title   String
+    body String
+    coverImage  String
+    authorId Int
+    author Admin @relation(fields: [authorId] , references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model payments {
+    id      Int @id @default(autoincrement())
+    name    String
+    email   String
+    phone   String
+    address String
+    country String
+    state   String
+    pincode String
+    dob     DateTime
+    comments String?
+    amount  Int
+    razorpayOrderId String?
+    razorPayPaymentId String?
+    razorpaySignature String?
+    subscriptionId  String?
+    paymentStatus String @default("pending")
+    panNo   String
+    aadharNo String
+    invoice   String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
