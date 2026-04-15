@@ -75,7 +75,8 @@ export const createOrder = async (req, res) => {
 
         return res.status(200).json({
             ...order,
-            paymentId: payment.id
+            paymentId: payment.id,
+            key_id: process.env.KEY_ID
         });
 
     } catch (error) {
@@ -186,6 +187,7 @@ export const createSubscription = async (req, res) => {
             success: true,
             subscriptionId: subscription.id,
             paymentId: payment.id,
+            key_id: process.env.KEY_ID,
         });
 
     } catch (error) {

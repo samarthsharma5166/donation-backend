@@ -19,14 +19,23 @@ import cors from 'cors'
 
 const app = express();
 
-app.use(cors({
-    origin:"http://localhost:3000",
-    credentials:true
-}))
+app.use(
+    cors({
+        origin: [
+            "http://localhost:3000",
+            "https://madhavamfoundation.com",
+            "https://www.madhavamfoundation.com",
+        ],
+        credentials: true,
+    })
+);
 
 // Security headers
-app.use(helmet());
-app.use(helmet());
+app.use(
+    helmet({
+        crossOriginResourcePolicy: { policy: "cross-origin" },
+    })
+);
 app.use(express.json());
 app.use(cookieParser());
 
